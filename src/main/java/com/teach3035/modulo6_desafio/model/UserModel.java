@@ -23,6 +23,10 @@ public class UserModel {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final List<TaskModel> tasks = new ArrayList<>();
+
+    // AUDIT FIELDS
+    private Boolean deleted = false;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -30,6 +34,14 @@ public class UserModel {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    // CONSTRUSCTOR AND GETTERS/SETTERS
+    public UserModel(){}
+
+    public UserModel(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -54,6 +66,15 @@ public class UserModel {
     public List<TaskModel> getTasks() {
         return tasks;
     }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
