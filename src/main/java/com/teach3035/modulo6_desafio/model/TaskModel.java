@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "tasks")
 @SoftDelete
 public class TaskModel {
+    // PRIMARY FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +41,7 @@ public class TaskModel {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // CONSTRUCTOR AND GETTERS/SETTERS
+    // CONSTRUCTORS
     public TaskModel() {}
 
     public TaskModel(String title, String description) {
@@ -48,6 +49,7 @@ public class TaskModel {
         this.description = description;
     }
 
+    // GETTERS AND SETTERS
     public Long getId() {
         return id;
     }
