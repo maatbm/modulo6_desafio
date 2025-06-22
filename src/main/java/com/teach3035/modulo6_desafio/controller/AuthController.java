@@ -18,7 +18,7 @@ public class AuthController {
 
     // CREATE A NEW USER
     @PostMapping("/register")
-    public RegisterUserResDTO register(@Valid @RequestBody RegisterUserReqDTO registerUserReqDTO){
+    public RegisterUserResDTO register(@Valid @RequestBody RegisterUserReqDTO registerUserReqDTO) {
         return userService.registerUser(registerUserReqDTO);
     }
 }
