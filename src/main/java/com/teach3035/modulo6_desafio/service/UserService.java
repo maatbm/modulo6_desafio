@@ -4,12 +4,13 @@ import com.teach3035.modulo6_desafio.DTO.req.LoginReqDTO;
 import com.teach3035.modulo6_desafio.DTO.req.RegisterUserReqDTO;
 import com.teach3035.modulo6_desafio.DTO.res.LoginResDTO;
 import com.teach3035.modulo6_desafio.DTO.res.RegisterUserResDTO;
-import com.teach3035.modulo6_desafio.exception.custom.InvalidPasswordException;
 import com.teach3035.modulo6_desafio.exception.custom.UserAlredyExistsExcpetion;
 import com.teach3035.modulo6_desafio.exception.custom.UserNotFoundException;
 import com.teach3035.modulo6_desafio.model.UserModel;
 import com.teach3035.modulo6_desafio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public RegisterUserResDTO registerUser(RegisterUserReqDTO user) {
         if (userRepository.existsByUsername(user.getUsername()))
@@ -38,9 +41,8 @@ public class UserService {
         if (optionalUser.isEmpty())
             throw new UserNotFoundException("User not found with username: " + loginReqDTO.getUsername());
         UserModel user = optionalUser.get();
-        if (!passwordEncoder.matches(loginReqDTO.getPassword(), user.getPassword())) {
-            throw new InvalidPasswordException("Invalid password for user: " + loginReqDTO.getUsername());
-        }
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginReqDTO.getUsername(), loginReqDTO.getPassword());
+        authenticationManager.authenticate(token);
         return tokenService.generateToken(user.getUsername());
     }
 }
