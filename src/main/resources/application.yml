@@ -3,12 +3,19 @@ spring:
     name: modulo6_desafio
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/teach_db
-    username: postgres
-    password: root
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
       ddl-auto: validate
-      show-sql: true
+      show-sql: false
     open-in-view: false
+
+security:
+  JWT:
+    secret: ${JWT_SECRET}
+    issuer: ${JWT_ISSUER}
+    expiration: ${JWT_EXPIRATION}
+    token-prefix: ${JWT_TOKEN_PREFIX}
