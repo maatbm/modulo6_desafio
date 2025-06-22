@@ -13,7 +13,7 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    public LoginResDTO genereteToken(UserModel user){
+    public LoginResDTO generateToken(UserModel user){
         String secret = "meu_secret_não_seguro";
         Algorithm algorithm = Algorithm.HMAC256(secret);
         Instant expirationDate = this.getExpirationDate();

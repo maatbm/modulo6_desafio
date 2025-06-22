@@ -41,6 +41,6 @@ public class UserService {
         if (!passwordEncoder.matches(loginReqDTO.getPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Invalid password for user: " + loginReqDTO.getUsername());
         }
-        return tokenService.genereteToken(user);
+        return tokenService.generateToken(user);
     }
 }
