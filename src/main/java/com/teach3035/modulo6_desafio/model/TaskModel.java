@@ -3,12 +3,14 @@ package com.teach3035.modulo6_desafio.model;
 import com.teach3035.modulo6_desafio.model.enums.TaskStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
+@SoftDelete
 public class TaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,7 @@ public class TaskModel {
     private UserModel user;
 
     // AUDIT FIELDS
-    private Boolean deleted = false;
+    private Boolean deleted;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -41,10 +43,9 @@ public class TaskModel {
     // CONSTRUCTOR AND GETTERS/SETTERS
     public TaskModel() {}
 
-    public TaskModel(String title, String description, UserModel user) {
+    public TaskModel(String title, String description) {
         this.title = title;
         this.description = description;
-        this.user = user;
     }
 
     public Long getId() {
@@ -91,7 +92,7 @@ public class TaskModel {
         this.status = status;
     }
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }
