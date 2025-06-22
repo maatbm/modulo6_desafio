@@ -4,12 +4,12 @@ import com.teach3035.modulo6_desafio.DTO.req.LoginReqDTO;
 import com.teach3035.modulo6_desafio.DTO.req.RegisterUserReqDTO;
 import com.teach3035.modulo6_desafio.DTO.res.LoginResDTO;
 import com.teach3035.modulo6_desafio.DTO.res.RegisterUserResDTO;
-import com.teach3035.modulo6_desafio.exception.InvalidPasswordException;
-import com.teach3035.modulo6_desafio.exception.UserAlredyExistsExcpetion;
+import com.teach3035.modulo6_desafio.exception.custom.InvalidPasswordException;
+import com.teach3035.modulo6_desafio.exception.custom.UserAlredyExistsExcpetion;
+import com.teach3035.modulo6_desafio.exception.custom.UserNotFoundException;
 import com.teach3035.modulo6_desafio.model.UserModel;
 import com.teach3035.modulo6_desafio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class UserService {
     public LoginResDTO loginUser(LoginReqDTO loginReqDTO) {
         Optional<UserModel> optionalUser = userRepository.findByUsername(loginReqDTO.getUsername());
         if (optionalUser.isEmpty())
-            throw new UsernameNotFoundException("User not found with username: " + loginReqDTO.getUsername());
+            throw new UserNotFoundException("User not found with username: " + loginReqDTO.getUsername());
         UserModel user = optionalUser.get();
         if (!passwordEncoder.matches(loginReqDTO.getPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Invalid password for user: " + loginReqDTO.getUsername());
