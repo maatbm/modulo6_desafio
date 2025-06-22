@@ -1,9 +1,9 @@
 spring:
   application:
-    name: demo-app
+    name: modulo6_desafio
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/demo_db
+    url: jdbc:postgresql://localhost:5432/teach_db
     username: postgres
     password: root
 
