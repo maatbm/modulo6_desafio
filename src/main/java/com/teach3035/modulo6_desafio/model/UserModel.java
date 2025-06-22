@@ -24,7 +24,7 @@ public class UserModel {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private final List<TaskModel> tasks = new ArrayList<>();
 
     // AUDIT FIELDS

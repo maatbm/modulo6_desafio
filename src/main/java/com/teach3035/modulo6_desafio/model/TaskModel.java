@@ -26,7 +26,7 @@ public class TaskModel {
     @Column(nullable = false)
     private TaskStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserModel user;
 
