@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS users (
+    -- PRIMARY FIELDS
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+
+    -- AUDIT FIELDS
+    deleted BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- INDEXES
+CREATE INDEX idx_users_active ON users(id) WHERE deleted = FALSE;
