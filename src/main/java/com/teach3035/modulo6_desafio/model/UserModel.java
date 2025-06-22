@@ -13,6 +13,7 @@ import java.util.List;
 @Table(name = "users")
 @SoftDelete
 public class UserModel {
+    //PRIMARY FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,7 +38,13 @@ public class UserModel {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // CONSTRUSCTOR AND GETTERS/SETTERS
+    // AUXILIARY METHODS
+    public void addTask(TaskModel task) {
+        tasks.add(task);
+        task.setUser(this);
+    }
+
+    // CONSTRUCTORS
     public UserModel(){}
 
     public UserModel(String username, String password) {
@@ -45,6 +52,7 @@ public class UserModel {
         this.password = password;
     }
 
+    // GETTERS AND SETTERS
     public Long getId() {
         return id;
     }
