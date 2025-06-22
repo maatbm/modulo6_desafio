@@ -28,8 +28,6 @@ public class UserModel {
     private final List<TaskModel> tasks = new ArrayList<>();
 
     // AUDIT FIELDS
-    private Boolean deleted;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -75,10 +73,6 @@ public class UserModel {
 
     public List<TaskModel> getTasks() {
         return tasks;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
     }
 
     public LocalDateTime getCreatedAt() {

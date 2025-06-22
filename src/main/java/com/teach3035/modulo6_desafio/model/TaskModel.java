@@ -31,8 +31,6 @@ public class TaskModel {
     private UserModel user;
 
     // AUDIT FIELDS
-    private Boolean deleted;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -68,10 +66,6 @@ public class TaskModel {
 
     public UserModel getUser() {
         return user;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
     }
 
     public LocalDateTime getCreatedAt() {
