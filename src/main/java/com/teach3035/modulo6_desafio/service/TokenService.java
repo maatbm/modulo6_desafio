@@ -3,7 +3,6 @@ package com.teach3035.modulo6_desafio.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.teach3035.modulo6_desafio.DTO.res.LoginResDTO;
-import com.teach3035.modulo6_desafio.model.UserModel;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,13 +12,13 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    public LoginResDTO generateToken(UserModel user){
+    public LoginResDTO generateToken(String username){
         String secret = "meu_secret_não_seguro";
         Algorithm algorithm = Algorithm.HMAC256(secret);
         Instant expirationDate = this.getExpirationDate();
         String token = JWT.create()
                 .withIssuer("modulo6_Desafio")
-                .withSubject(user.getUsername())
+                .withSubject(username)
                 .withExpiresAt(expirationDate)
                 .sign(algorithm);
         return  new LoginResDTO("Bearer ", token, expirationDate.toEpochMilli());
