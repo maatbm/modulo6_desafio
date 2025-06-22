@@ -16,6 +16,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    // CREATE A NEW USER
     @PostMapping("/register")
     public RegisterUserResDTO register(@Valid @RequestBody RegisterUserReqDTO registerUserReqDTO){
         return userService.registerUser(registerUserReqDTO);
