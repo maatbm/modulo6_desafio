@@ -37,12 +37,8 @@ public class UserService {
     }
 
     public LoginResDTO loginUser(LoginReqDTO loginReqDTO) {
-        Optional<UserModel> optionalUser = userRepository.findByUsername(loginReqDTO.getUsername());
-        if (optionalUser.isEmpty())
-            throw new UserNotFoundException("User not found with username: " + loginReqDTO.getUsername());
-        UserModel user = optionalUser.get();
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginReqDTO.getUsername(), loginReqDTO.getPassword());
         authenticationManager.authenticate(token);
-        return tokenService.generateToken(user.getUsername());
+        return tokenService.generateToken(loginReqDTO.getUsername());
     }
 }
