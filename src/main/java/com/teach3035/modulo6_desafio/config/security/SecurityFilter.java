@@ -32,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             Optional<UserModel> user = userRepository.findByUsername(username);
             if (user.isEmpty())
                 throw new UsernameNotFoundException("User not found: " + username);
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.get(), null);
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.get(), null, user.get().getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }
         filterChain.doFilter(request, response);
