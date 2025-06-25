@@ -43,10 +43,9 @@ public class TaskService {
     }
 
     public TaskDTO createTask(CreateTaskReqDTO dto, String username) {
-        Optional<UserModel> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isEmpty())
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        UserModel user = optionalUser.get();
+        UserModel user = userRepository
+                .findByUsername(username)
+                .orElseThrow(()-> new UsernameNotFoundException("User not found with username: " + username));
         TaskModel task = new TaskModel();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
