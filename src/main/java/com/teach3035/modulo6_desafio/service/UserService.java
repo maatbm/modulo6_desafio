@@ -28,7 +28,7 @@ public class UserService {
         if (userRepository.existsByUsername(user.username()))
             throw new UserAlredyExistsExcpetion("User already exists with username: " + user.username());
         String encryptedPassword = passwordEncoder.encode(user.password());
-        UserModel userModel = new UserModel(user.password(), encryptedPassword);
+        UserModel userModel = new UserModel(user.username(), encryptedPassword);
         userRepository.save(userModel);
         return new RegisterUserResDTO(userModel.getId(), userModel.getUsername());
     }
