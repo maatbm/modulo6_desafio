@@ -39,4 +39,9 @@ public class TaskController {
     public TaskDTO updateTask(@PathVariable Long id, @RequestBody UpdateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
         return taskService.updateTask(id, dto, userDetails.getUsername());
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteTaskById(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        taskService.deleteTaskById(id, userDetails.getUsername());
+    }
 }

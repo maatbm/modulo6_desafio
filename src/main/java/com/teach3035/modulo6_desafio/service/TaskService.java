@@ -101,6 +101,13 @@ public class TaskService {
         );
     }
 
+    public void deleteTaskById(Long id, String username) {
+        TaskModel task = taskRepository
+                .findByIdAndUserUsername(id, username)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
+        taskRepository.delete(task);
+    }
+
     private TaskStatus validateStatus(String status) {
         try {
             return TaskStatus.valueOf(status.toUpperCase());
