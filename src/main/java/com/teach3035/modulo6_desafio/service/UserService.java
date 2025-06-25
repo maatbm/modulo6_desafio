@@ -34,8 +34,8 @@ public class UserService {
     }
 
     public LoginResDTO loginUser(LoginReqDTO loginReqDTO) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginReqDTO.getUsername(), loginReqDTO.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginReqDTO.username(), loginReqDTO.password());
         authenticationManager.authenticate(token);
-        return tokenService.generateToken(loginReqDTO.getUsername());
+        return tokenService.generateToken(loginReqDTO.username());
     }
 }

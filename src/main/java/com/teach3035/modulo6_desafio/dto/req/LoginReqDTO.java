@@ -1,20 +1,15 @@
 package com.teach3035.modulo6_desafio.dto.req;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-public class LoginReqDTO {
-    // PRIMARY FIELDS
-    @NotBlank(message = "Username is required")
-    private String username;
+public record LoginReqDTO(
+        @NotBlank(message = "Username is required")
+        @Size(min = 3, max = 100, message = "Username must be between 3 and 100 characters")
+        String username,
 
-    @NotBlank(message = "Password is required")
-    private String password;
-
-    // GETTERS
-    public String getUsername() {
-        return username;
-    }
-    public String getPassword() {
-        return password;
-    }
+        @NotBlank(message = "Password is required")
+        @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
+        String password
+) {
 }
