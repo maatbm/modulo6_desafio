@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -29,10 +28,10 @@ public class SecurityFilter extends OncePerRequestFilter {
         String token = getToken(request);
         if (token != null) {
             String username = tokenService.validateToken(token);
-            Optional<UserModel> user = userRepository.findByUsername(username);
-            if (user.isEmpty())
-                throw new UsernameNotFoundException("User not found: " + username);
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.get(), null, user.get().getAuthorities());
+            UserModel user = userRepository
+                    .findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with username " + username));
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }
         filterChain.doFilter(request, response);
