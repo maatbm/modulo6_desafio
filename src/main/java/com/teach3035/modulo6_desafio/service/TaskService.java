@@ -31,14 +31,8 @@ public class TaskService {
 
     @Transactional
     public TaskDTO getTaskById(Long id, String username) {
-        Optional<UserModel> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isEmpty())
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        UserModel user = optionalUser.get();
-        List<TaskModel> tasks = user.getTasks();
-        TaskModel task = tasks.stream()
-                .filter(t -> t.getId().equals(id))
-                .findFirst()
+        TaskModel task = taskRepository
+                .findByIdAndUserUsername(id, username)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
         return new TaskDTO(
                 task.getId(),
@@ -48,7 +42,7 @@ public class TaskService {
         );
     }
 
-    public TaskDTO createTask( CreateTaskReqDTO dto, String username) {
+    public TaskDTO createTask(CreateTaskReqDTO dto, String username) {
         Optional<UserModel> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isEmpty())
             throw new UsernameNotFoundException("User not found with username: " + username);
