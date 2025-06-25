@@ -1,8 +1,10 @@
 package com.teach3035.modulo6_desafio.service;
 
 import com.teach3035.modulo6_desafio.dto.req.CreateTaskReqDTO;
+import com.teach3035.modulo6_desafio.dto.req.UpdateTaskReqDTO;
 import com.teach3035.modulo6_desafio.dto.res.GetTasksDTO;
 import com.teach3035.modulo6_desafio.dto.res.TaskDTO;
+import com.teach3035.modulo6_desafio.exception.custom.InvalidStatusException;
 import com.teach3035.modulo6_desafio.exception.custom.TaskNotFoundException;
 import com.teach3035.modulo6_desafio.model.TaskModel;
 import com.teach3035.modulo6_desafio.model.UserModel;
@@ -36,7 +38,7 @@ public class TaskService {
     }
 
     public GetTasksDTO getTasksWithStatusFilter(String status, String username) {
-        TaskStatus taskStatus = TaskStatus.valueOf(status.toUpperCase());
+        TaskStatus taskStatus = this.validateStatus(status);
         List<TaskModel> tasks = taskRepository.findAllByUserUsernameAndStatus(username, taskStatus);
         return new GetTasksDTO(
                 tasks.stream().map(task -> new TaskDTO(
@@ -77,5 +79,33 @@ public class TaskService {
                 task.getDescription(),
                 task.getStatus()
         );
+    }
+
+    public TaskDTO updateTask(Long id, UpdateTaskReqDTO dto, String username) {
+        TaskModel task = taskRepository
+                .findByIdAndUserUsername(id, username)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
+        if (dto.description() != null && !task.getDescription().equals(dto.description())) {
+            task.setDescription(dto.description());
+        }
+        TaskStatus newStatus = validateStatus(dto.status());
+        if (!task.getStatus().name().equals(newStatus.name())) {
+            task.setStatus(newStatus);
+        }
+        taskRepository.save(task);
+        return new TaskDTO(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus()
+        );
+    }
+
+    private TaskStatus validateStatus(String status) {
+        try {
+            return TaskStatus.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidStatusException("Invalid status: " + status);
+        }
     }
 }

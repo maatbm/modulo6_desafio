@@ -1,6 +1,7 @@
 package com.teach3035.modulo6_desafio.controller;
 
 import com.teach3035.modulo6_desafio.dto.req.CreateTaskReqDTO;
+import com.teach3035.modulo6_desafio.dto.req.UpdateTaskReqDTO;
 import com.teach3035.modulo6_desafio.dto.res.GetTasksDTO;
 import com.teach3035.modulo6_desafio.dto.res.TaskDTO;
 import com.teach3035.modulo6_desafio.service.TaskService;
@@ -32,5 +33,10 @@ public class TaskController {
     @PostMapping
     public TaskDTO createTask(@Valid @RequestBody CreateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
         return taskService.createTask(dto, userDetails.getUsername());
+    }
+
+    @PatchMapping("/{id}")
+    public TaskDTO updateTask(@PathVariable Long id, @RequestBody UpdateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
+        return taskService.updateTask(id, dto, userDetails.getUsername());
     }
 }
