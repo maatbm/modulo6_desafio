@@ -1,4 +1,4 @@
-package com.teach3035.modulo6_desafio.DTO.req;
+package com.teach3035.modulo6_desafio.dto.req;
 
 import jakarta.validation.constraints.NotBlank;
 

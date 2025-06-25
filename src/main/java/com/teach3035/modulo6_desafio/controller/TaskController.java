@@ -1,9 +1,9 @@
 package com.teach3035.modulo6_desafio.controller;
 
-import com.teach3035.modulo6_desafio.DTO.req.CreateTaskReqDTO;
-import com.teach3035.modulo6_desafio.DTO.req.GetTasksReqDTO;
-import com.teach3035.modulo6_desafio.DTO.res.GetTasksDTO;
-import com.teach3035.modulo6_desafio.DTO.res.TaskDTO;
+import com.teach3035.modulo6_desafio.dto.req.CreateTaskReqDTO;
+import com.teach3035.modulo6_desafio.dto.req.GetTasksReqDTO;
+import com.teach3035.modulo6_desafio.dto.res.GetTasksDTO;
+import com.teach3035.modulo6_desafio.dto.res.TaskDTO;
 import com.teach3035.modulo6_desafio.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

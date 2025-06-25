@@ -1,9 +1,9 @@
 package com.teach3035.modulo6_desafio.service;
 
-import com.teach3035.modulo6_desafio.DTO.req.CreateTaskReqDTO;
-import com.teach3035.modulo6_desafio.DTO.req.GetTasksReqDTO;
-import com.teach3035.modulo6_desafio.DTO.res.GetTasksDTO;
-import com.teach3035.modulo6_desafio.DTO.res.TaskDTO;
+import com.teach3035.modulo6_desafio.dto.req.CreateTaskReqDTO;
+import com.teach3035.modulo6_desafio.dto.req.GetTasksReqDTO;
+import com.teach3035.modulo6_desafio.dto.res.GetTasksDTO;
+import com.teach3035.modulo6_desafio.dto.res.TaskDTO;
 import com.teach3035.modulo6_desafio.exception.custom.TaskNotFoundException;
 import com.teach3035.modulo6_desafio.model.TaskModel;
 import com.teach3035.modulo6_desafio.model.UserModel;
@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -47,8 +46,8 @@ public class TaskService {
                 .findByUsername(username)
                 .orElseThrow(()-> new UsernameNotFoundException("User not found with username: " + username));
         TaskModel task = new TaskModel();
-        task.setTitle(dto.getTitle());
-        task.setDescription(dto.getDescription());
+        task.setTitle(dto.title());
+        task.setDescription(dto.description());
         task.setStatus(TaskStatus.PENDING);
         task.setUser(user);
         taskRepository.save(task);
