@@ -10,6 +10,7 @@ import com.teach3035.modulo6_desafio.model.UserModel;
 import com.teach3035.modulo6_desafio.model.enums.TaskStatus;
 import com.teach3035.modulo6_desafio.repository.TaskRepository;
 import com.teach3035.modulo6_desafio.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class TaskService {
         return new GetTasksDTO(List.of());
     }
 
+    @Transactional
     public TaskDTO getTaskById(Long id, String username) {
         Optional<UserModel> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isEmpty())
