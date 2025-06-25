@@ -23,11 +23,13 @@ public class TaskController {
         return taskService.getTasks(dto, userDetails.getUsername());
     }
 
+    // GET TASK BY ID
     @GetMapping("/{id}")
     public TaskDTO getTaskById(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
         return taskService.getTaskById(id, userDetails.getUsername());
     }
 
+    // CREATE NEW TASK
     @PostMapping
     public TaskDTO createTask(@Valid @RequestBody CreateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
         return taskService.createTask(dto, userDetails.getUsername());
