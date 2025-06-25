@@ -1,7 +1,6 @@
 package com.teach3035.modulo6_desafio.service;
 
 import com.teach3035.modulo6_desafio.dto.req.CreateTaskReqDTO;
-import com.teach3035.modulo6_desafio.dto.req.GetTasksReqDTO;
 import com.teach3035.modulo6_desafio.dto.res.GetTasksDTO;
 import com.teach3035.modulo6_desafio.dto.res.TaskDTO;
 import com.teach3035.modulo6_desafio.exception.custom.TaskNotFoundException;
@@ -24,8 +23,29 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public GetTasksDTO getTasks(GetTasksReqDTO dto, String username) {
-        return new GetTasksDTO(List.of());
+    public GetTasksDTO getAllTasks(String username) {
+        List<TaskModel> tasks = taskRepository.findAllByUserUsername(username);
+        return new GetTasksDTO(
+                tasks.stream().map(task -> new TaskDTO(
+                        task.getId(),
+                        task.getTitle(),
+                        task.getDescription(),
+                        task.getStatus()
+                )).toList()
+        );
+    }
+
+    public GetTasksDTO getTasksWithStatusFilter(String status, String username) {
+        TaskStatus taskStatus = TaskStatus.valueOf(status.toUpperCase());
+        List<TaskModel> tasks = taskRepository.findAllByUserUsernameAndStatus(username, taskStatus);
+        return new GetTasksDTO(
+                tasks.stream().map(task -> new TaskDTO(
+                        task.getId(),
+                        task.getTitle(),
+                        task.getDescription(),
+                        task.getStatus()
+                )).toList()
+        );
     }
 
     @Transactional
@@ -44,7 +64,7 @@ public class TaskService {
     public TaskDTO createTask(CreateTaskReqDTO dto, String username) {
         UserModel user = userRepository
                 .findByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException("User not found with username: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
         TaskModel task = new TaskModel();
         task.setTitle(dto.title());
         task.setDescription(dto.description());
