@@ -36,8 +36,8 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}")
-    public TaskDTO updateTask(@PathVariable Long id, @RequestBody UpdateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
-        return taskService.updateTask(id, dto, userDetails.getUsername());
+    public TaskDTO updateTaskById(@PathVariable Long id, @RequestBody UpdateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
+        return taskService.PatchUpdateTaskById(id, dto, userDetails.getUsername());
     }
 
     @DeleteMapping("/{id}")

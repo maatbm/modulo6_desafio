@@ -81,7 +81,7 @@ public class TaskService {
         );
     }
 
-    public TaskDTO updateTask(Long id, UpdateTaskReqDTO dto, String username) {
+    public TaskDTO PatchUpdateTaskById(Long id, UpdateTaskReqDTO dto, String username) {
         TaskModel task = taskRepository
                 .findByIdAndUserUsername(id, username)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
