@@ -88,7 +88,7 @@ public class TaskService {
         if (dto.description() != null && !task.getDescription().equals(dto.description())) {
             task.setDescription(dto.description());
         }
-        TaskStatus newStatus = validateStatus(dto.status());
+        TaskStatus newStatus = this.validateStatus(dto.status());
         if (!task.getStatus().name().equals(newStatus.name())) {
             task.setStatus(newStatus);
         }
