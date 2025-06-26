@@ -4,7 +4,7 @@ import com.teach3035.modulo6_desafio.dto.req.LoginReqDTO;
 import com.teach3035.modulo6_desafio.dto.req.RegisterUserReqDTO;
 import com.teach3035.modulo6_desafio.dto.res.LoginResDTO;
 import com.teach3035.modulo6_desafio.dto.res.RegisterUserResDTO;
-import com.teach3035.modulo6_desafio.exception.custom.UserAlredyExistsException;
+import com.teach3035.modulo6_desafio.exception.custom.UserAlreadyExistsException;
 import com.teach3035.modulo6_desafio.model.UserModel;
 import com.teach3035.modulo6_desafio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class UserService {
 
     public RegisterUserResDTO registerUser(RegisterUserReqDTO user) {
         if (userRepository.existsByUsername(user.username()))
-            throw new UserAlredyExistsException("User already exists with username: " + user.username());
+            throw new UserAlreadyExistsException("User already exists with username: " + user.username());
         String encryptedPassword = passwordEncoder.encode(user.password());
         UserModel userModel = new UserModel(user.username(), encryptedPassword);
         userRepository.save(userModel);
