@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "users")
 @SoftDelete
 public class UserModel implements UserDetails {
-    //PRIMARY FIELDS
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,6 @@ public class UserModel implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private final List<TaskModel> tasks = new ArrayList<>();
 
-    // AUDIT FIELDS
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -40,7 +39,6 @@ public class UserModel implements UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // AUXILIARY METHODS
     public void addTask(TaskModel task) {
         tasks.add(task);
         task.setUser(this);
@@ -71,15 +69,14 @@ public class UserModel implements UserDetails {
         return new ArrayList<SimpleGrantedAuthority>();
     }
 
-    // CONSTRUCTORS
-    public UserModel(){}
+    public UserModel() {
+    }
 
     public UserModel(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    // GETTERS AND SETTERS
     public Long getId() {
         return id;
     }

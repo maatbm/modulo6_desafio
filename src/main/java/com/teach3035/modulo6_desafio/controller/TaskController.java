@@ -19,10 +19,10 @@ public class TaskController {
     TaskService taskService;
 
     @GetMapping
-    public GetTasksDTO getTasks(@RequestParam(value = "status", required = false) String status, @AuthenticationPrincipal UserDetails userDetails){
+    public GetTasksDTO getTasks(@RequestParam(value = "status", required = false) String status, @AuthenticationPrincipal UserDetails userDetails) {
         return status == null
-            ? taskService.getAllTasks(userDetails.getUsername())
-            : taskService.getTasksWithStatusFilter(status, userDetails.getUsername());
+                ? taskService.getAllTasks(userDetails.getUsername())
+                : taskService.getTasksWithStatusFilter(status, userDetails.getUsername());
     }
 
     @GetMapping("/{id}")
