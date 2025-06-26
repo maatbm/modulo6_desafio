@@ -13,10 +13,11 @@ import com.teach3035.modulo6_desafio.repository.TaskRepository;
 import com.teach3035.modulo6_desafio.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TaskService {
@@ -25,8 +26,9 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public GetTasksDTO getAllTasks(String username) {
-        List<TaskModel> tasks = taskRepository.findAllByUserUsername(username);
+    public GetTasksDTO getAllTasks(String username, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TaskModel> tasks = taskRepository.findAllByUserUsername(username, pageable);
         return new GetTasksDTO(
                 tasks.stream().map(task -> new TaskDTO(
                         task.getId(),
@@ -37,9 +39,10 @@ public class TaskService {
         );
     }
 
-    public GetTasksDTO getTasksWithStatusFilter(String status, String username) {
+    public GetTasksDTO getTasksWithStatusFilter(String status, String username, int page, int size) {
         TaskStatus taskStatus = this.validateStatus(status);
-        List<TaskModel> tasks = taskRepository.findAllByUserUsernameAndStatus(username, taskStatus);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TaskModel> tasks = taskRepository.findAllByUserUsernameAndStatus(username, taskStatus, pageable);
         return new GetTasksDTO(
                 tasks.stream().map(task -> new TaskDTO(
                         task.getId(),

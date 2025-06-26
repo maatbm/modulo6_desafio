@@ -21,11 +21,13 @@ public class TaskController {
     @GetMapping
     public GetTasksDTO getTasks(
             @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         return status == null
-                ? taskService.getAllTasks(userDetails.getUsername())
-                : taskService.getTasksWithStatusFilter(status, userDetails.getUsername());
+                ? taskService.getAllTasks(userDetails.getUsername(), page, size)
+                : taskService.getTasksWithStatusFilter(status, userDetails.getUsername(), page, size);
     }
 
     @GetMapping("/{id}")
