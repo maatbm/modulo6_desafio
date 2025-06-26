@@ -6,6 +6,7 @@ import com.teach3035.modulo6_desafio.dto.res.GetTasksDTO;
 import com.teach3035.modulo6_desafio.dto.res.TaskDTO;
 import com.teach3035.modulo6_desafio.exception.custom.InvalidStatusException;
 import com.teach3035.modulo6_desafio.exception.custom.TaskNotFoundException;
+import com.teach3035.modulo6_desafio.exception.custom.UserNotFoundException;
 import com.teach3035.modulo6_desafio.model.TaskModel;
 import com.teach3035.modulo6_desafio.model.UserModel;
 import com.teach3035.modulo6_desafio.model.enums.TaskStatus;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -69,7 +69,7 @@ public class TaskService {
     public TaskDTO createTask(CreateTaskReqDTO dto, String username) {
         UserModel user = userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
         TaskModel task = new TaskModel();
         task.setTitle(dto.title());
         task.setDescription(dto.description());
