@@ -19,29 +19,45 @@ public class TaskController {
     TaskService taskService;
 
     @GetMapping
-    public GetTasksDTO getTasks(@RequestParam(value = "status", required = false) String status, @AuthenticationPrincipal UserDetails userDetails) {
+    public GetTasksDTO getTasks(
+            @RequestParam(value = "status", required = false) String status,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         return status == null
                 ? taskService.getAllTasks(userDetails.getUsername())
                 : taskService.getTasksWithStatusFilter(status, userDetails.getUsername());
     }
 
     @GetMapping("/{id}")
-    public TaskDTO getTaskById(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    public TaskDTO getTaskById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         return taskService.getTaskById(id, userDetails.getUsername());
     }
 
     @PostMapping
-    public TaskDTO createTask(@Valid @RequestBody CreateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
+    public TaskDTO createTask(
+            @Valid @RequestBody CreateTaskReqDTO dto,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         return taskService.createTask(dto, userDetails.getUsername());
     }
 
     @PatchMapping("/{id}")
-    public TaskDTO updateTaskById(@PathVariable Long id, @RequestBody UpdateTaskReqDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
+    public TaskDTO updateTaskById(
+            @PathVariable Long id,
+            @RequestBody UpdateTaskReqDTO dto,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         return taskService.PatchUpdateTaskById(id, dto, userDetails.getUsername());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTaskById(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    public void deleteTaskById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         taskService.deleteTaskById(id, userDetails.getUsername());
     }
 }
