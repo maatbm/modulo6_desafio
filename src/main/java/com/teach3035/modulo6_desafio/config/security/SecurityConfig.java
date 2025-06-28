@@ -20,8 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     private JWTAuthenticationFilter JWTAuthenticationFilter;
-    @Autowired
-    private JWTExceptionHandlerFilter JWTExceptionHandlerFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
@@ -34,7 +32,6 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .addFilterBefore(JWTExceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(JWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return security.build();
