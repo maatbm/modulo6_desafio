@@ -2,6 +2,7 @@ package com.teach3035.modulo6_desafio.model;
 
 import com.teach3035.modulo6_desafio.model.enums.TaskStatus;
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,21 +12,31 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tasks")
 @SoftDelete
+@Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@ToString(exclude = {"user"})
 public class TaskModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     @Column(nullable = false)
     private String title;
 
+    @Setter
+    @NonNull
     private String description;
 
+    @Setter
+    @NonNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TaskStatus status;
 
+    @NonNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserModel user;
@@ -37,56 +48,4 @@ public class TaskModel {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public TaskModel() {
-    }
-
-    public TaskModel(String title, String description) {
-        this.title = title;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public UserModel getUser() {
-        return user;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStatus(TaskStatus status) {
-        this.status = status;
-    }
-
-    public void setUser(UserModel user) {
-        this.user = user;
-    }
 }
