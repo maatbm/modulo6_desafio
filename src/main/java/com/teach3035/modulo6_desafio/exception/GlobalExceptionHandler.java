@@ -22,13 +22,13 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler({UserAlreadyExistsException.class})
+    @ExceptionHandler(UserAlreadyExistsException.class)
     public ExceptionResDTO userAlreadyExistsExceptionHandler(UserAlreadyExistsException e) {
         return new ExceptionResDTO(HttpStatus.CONFLICT.name(), e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({InvalidStatusException.class})
+    @ExceptionHandler(InvalidStatusException.class)
     public ExceptionResDTO invalidTaskStatusExceptionHandler(InvalidStatusException e) {
         return new ExceptionResDTO(HttpStatus.BAD_REQUEST.name(), e.getMessage());
     }
