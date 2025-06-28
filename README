@@ -13,3 +13,9 @@ CORS_ALLOWED_ORIGINS
 
 # Para que tudo funcione corretamente, crie o .env em qualquer lugar do projeto
 e o adicione nas configurações de Run/Debug do IntelliJ, como mostrado no último vídeo do curso.
+
+# Eu recomendo que, para acessar a interface do Swagger, você adicione o caminho dele nos requestMatchers
+e permitAll(). O acesso a ele, por padrão, precisa de autenticação.
+
+# Outra forma de acessar o Swagger é logando um usuário no sistema com o Postamn e na requisição do
+Swagger adicionar o token JWT no header Authorization.
