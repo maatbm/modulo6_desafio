@@ -1,9 +1,9 @@
 package com.teach3035.modulo6_desafio.exception;
 
+import com.auth0.jwt.exceptions.*;
 import com.teach3035.modulo6_desafio.dto.res.ExceptionResDTO;
 import com.teach3035.modulo6_desafio.exception.custom.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,4 +42,18 @@ public class GlobalExceptionHandler {
         });
         return errors;
     }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler({
+            TokenExpiredException.class,
+            SignatureVerificationException.class,
+            AlgorithmMismatchException.class,
+            JWTDecodeException.class,
+            InvalidClaimException.class,
+            IllegalArgumentException.class
+    })
+    public ExceptionResDTO jwtExceptionHandler(RuntimeException e) {
+        return new ExceptionResDTO(HttpStatus.UNAUTHORIZED.name(), e.getMessage());
+    }
+
 }
