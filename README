@@ -1,0 +1,15 @@
+# As variáveis de ambiente necessárias para o funcionamento do sistema são:
+
+DB_URL
+DB_USER
+DB_PASSWORD
+
+JWT_SECRET
+JWT_ISSUER
+JWT_EXPIRATION (Esse valor deve ser em horas)
+JWT_TOKEN_PREFIX
+
+CORS_ALLOWED_ORIGINS
+
+# Para que tudo funcione corretamente, crie o .env em qualquer lugar do projeto
+e o adicione nas configurações de Run/Debug do IntelliJ, como mostrado no último vídeo do curso.
