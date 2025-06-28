@@ -1,6 +1,7 @@
 package com.teach3035.modulo6_desafio.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,15 +17,22 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @SoftDelete
+@Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class UserModel implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
+    @NonNull
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Setter
+    @NonNull
     @Column(nullable = false)
     private String password;
 
@@ -69,43 +77,4 @@ public class UserModel implements UserDetails {
         return new ArrayList<SimpleGrantedAuthority>();
     }
 
-    public UserModel() {
-    }
-
-    public UserModel(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<TaskModel> getTasks() {
-        return tasks;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
 }
