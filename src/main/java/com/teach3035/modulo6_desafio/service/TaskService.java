@@ -70,11 +70,7 @@ public class TaskService {
         UserModel user = userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-        TaskModel task = new TaskModel();
-        task.setTitle(dto.title());
-        task.setDescription(dto.description());
-        task.setStatus(TaskStatus.PENDING);
-        task.setUser(user);
+        TaskModel task = new TaskModel(dto.title(), dto.description(), TaskStatus.PENDING, user);
         taskRepository.save(task);
         return new TaskDTO(
                 task.getId(),
