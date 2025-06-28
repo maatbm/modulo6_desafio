@@ -12,13 +12,13 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
-    @Value("${security.JWT.secret}")
+    @Value("${security.jwt.secret}")
     private String secret;
-    @Value("${security.JWT.issuer}")
+    @Value("${security.jwt.issuer}")
     private String issuer;
-    @Value("${security.JWT.expiration}")
+    @Value("${security.jwt.expiration}")
     private int expiration;
-    @Value("${security.JWT.token-prefix}")
+    @Value("${security.jwt.token-prefix}")
     private String tokenPrefix;
 
     public LoginResDTO generateToken(String username) {

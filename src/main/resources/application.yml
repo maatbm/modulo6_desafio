@@ -14,7 +14,7 @@ spring:
     open-in-view: false
 
 security:
-  JWT:
+  jwt:
     secret: ${JWT_SECRET}
     issuer: ${JWT_ISSUER}
     expiration: ${JWT_EXPIRATION}
