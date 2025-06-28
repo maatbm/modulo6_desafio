@@ -16,7 +16,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({UserNotFoundException.class, TaskNotFoundException.class})
+    @ExceptionHandler(TaskNotFoundException.class)
     public ExceptionResDTO resourceNotFoundExceptionHandler(ResourceNotFoundException e) {
         return new ExceptionResDTO(HttpStatus.NOT_FOUND.name(), e.getMessage());
     }
