@@ -47,11 +47,6 @@ public class UserModel implements UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public void addTask(TaskModel task) {
-        tasks.add(task);
-        task.setUser(this);
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
